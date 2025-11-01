@@ -1,59 +1,69 @@
-#ifndef __COMPLEX__H
-#define __COMPLEX__H
+#ifndef __COMPLEX_H
+#define __COMPLEX_H
 
+#include <iostream>
 #include <ostream>
+
+using namespace std;
 
 class Complex
 {
 public:
-	Complex(double r = 0, double i = 0) : re(r), im(i)
+	// 构造函数
+	Complex(double r = 0, double i = 0) : m_re(r), m_im(i)
 	{
+		// cout << "构造函数被调用..." << endl;
 	}
 
+	//  拷贝构造函数
+	Complex(const Complex & c)
+	{
+		this->m_im = c.m_im ;
+		this->m_re = c.m_re ;
+		// cout << "拷贝构造函数被调用..." << endl;
+	}
 
-	double real() const
+	double get_real() const
 	{
-		return re;
+		return m_re;
 	}
-	void real(double r)
+	void set_real(double r)
 	{
-		re = r;
+		m_re = r;
 	}
-	double imag() const
+	double get_imag() const
 	{
-		return im;
+		return m_im;
 	}
-	void imag(double i)
+	void set_imag(double i)
 	{
-		im = i;
+		m_im = i;
 	}
 
 	Complex operator+(const Complex& x)
 	{
-		return Complex(this->re + x.real(), this->im + x.imag());
+		return Complex(this->m_re + x.m_re, this->m_im + x.m_im);
 	}
-	
+
 	friend Complex operator+(const double x, const Complex& y)
 	{
-		return Complex(x + y.real(), y.imag());
+		return Complex(x + y.m_re, y.m_im);
 	}
-	
+
 	friend Complex operator+(const Complex& x, const double y)
 	{
-		return Complex(x.real() + y, x.imag());
+		return Complex(x.m_re + y, x.m_im);
 	}
-	
-
 
 private:
-	double re, im;
+	double m_re, m_im;
 
 
 };
 
 std::ostream &operator<<(std::ostream &os, const Complex &x)
 {
-	os << "(" << x.real() << "," << x.imag()<< ")";
+	os << "(" << x.get_real() << "," << x.get_imag() << ")";
 	return os;
 }
 #endif
